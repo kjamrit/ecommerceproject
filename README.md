@@ -6,3 +6,6 @@
 4. Switch to the ecomm folder
 5. Run the following command
    python manage.py runserver
+
+API Documentation:
+https://documenter.getpostman.com/view/23322701/2sA3JJ8N7R

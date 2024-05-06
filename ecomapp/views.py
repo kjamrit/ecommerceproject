@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Customer, Product, Order
-from rest_framework import viewsets, generics, permissions
+from rest_framework import viewsets, generics, permissions, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import ProductSerializer, CustomerSerializer, OrderSerializer, UserSerializer, MyTokenObtainPairSerializer
@@ -17,6 +17,9 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name', 'price']
+    ordering_fields = ['name', 'price']
 
 class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()

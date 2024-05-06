@@ -3,16 +3,20 @@ from .models import Customer, Product, Order, User, Seller
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        Customer.objects.create(user=user)
-        return user
+    user_type = serializers.ChoiceField(choices=['customer', 'seller'], write_only=True)
 
     class Meta:
         model = User
-        fields = ('username', 'password')
+        fields = ('username', 'password', 'user_type')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user_type = validated_data.pop('user_type')  
+        user = User.objects.create_user(**validated_data)
+        if user_type == 'seller':
+            Seller.objects.create(user=user)
+        return user
+    
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod

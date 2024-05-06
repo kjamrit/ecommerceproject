@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Customer, Product, Order, Seller
-from rest_framework import viewsets, generics, permissions, status
+from rest_framework import viewsets, generics, permissions, status, filters
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -9,7 +9,7 @@ from .serializers import ProductSerializer, CustomerSerializer, OrderSerializer,
 # Create your views here.
 class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny,)  
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer

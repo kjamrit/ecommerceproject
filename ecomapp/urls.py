@@ -1,11 +1,12 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from .views import ProductViewSet, CustomerViewSet, OrderViewSet, CreateUserView, MyTokenObtainPairView
+from .views import ProductViewSet, CustomerViewSet, OrderViewSet, CreateUserView, MyTokenObtainPairView, SellerViewSet
 
 router = DefaultRouter()
 router.register(r'products', ProductViewSet)
 router.register(r'customers', CustomerViewSet)
 router.register(r'orders', OrderViewSet)
+router.register(r'sellers', SellerViewSet)
 
 urlpatterns = [
     path('users/create/', CreateUserView.as_view(), name='user-create'),
